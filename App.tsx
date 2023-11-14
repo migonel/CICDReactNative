@@ -81,12 +81,6 @@ function App(): JSX.Element {
           <View>
             <Button title="Crash" onPress={() => {throw new Error("Some text")}}/>
           </View>
-            
-
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
         </View>
       </ScrollView>
     </SafeAreaView>
