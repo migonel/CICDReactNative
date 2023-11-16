@@ -6,6 +6,7 @@
  */
 
 import React from 'react';
+import Crashes from 'appcenter-crashes';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -13,6 +14,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  Alert,
   Button,
   useColorScheme,
   View,
@@ -63,6 +65,18 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  // const checkPreviousSession = async () => {
+  //   const didCrash = await Crashes.hasCrashedInLastSession();
+  //   if(didCrash){
+  //     const report = await Crashes.lastSessionCrashReport();
+  //     Alert.alert("Sorry about that crash, we are working on it.")
+  //   };
+  // };
+
+  // checkPreviousSession();
+
+
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -79,7 +93,7 @@ function App(): JSX.Element {
           }}>
 
           <View>
-            <Button title="Crash" onPress={() => {throw new Error("Some text")}}/>
+            <Button title="Crash" onPress={() => Crashes.generateTestCrash()}/>
           </View>
         </View>
       </ScrollView>
