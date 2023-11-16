@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Crashes from 'appcenter-crashes';
 import type {PropsWithChildren} from 'react';
 import {
@@ -18,6 +18,9 @@ import {
   Button,
   useColorScheme,
   View,
+  TextInput,
+  TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native';
 
 import {
@@ -28,35 +31,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -65,37 +40,43 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  // const checkPreviousSession = async () => {
-  //   const didCrash = await Crashes.hasCrashedInLastSession();
-  //   if(didCrash){
-  //     const report = await Crashes.lastSessionCrashReport();
-  //     Alert.alert("Sorry about that crash, we are working on it.")
-  //   };
-  // };
+  var [isRedActive, setRed] = useState("false");
+  const onPressSetRed = () => {
+    setRed(isRedActive === "false" ? "true" : "false");
+  }
 
-  // checkPreviousSession();
+  var [isYellowActive, setYellow] = useState("false");
+  const onPressSetYellow = () => {
+    setYellow(isYellowActive === "false" ? "true" : "false");
+  }
+
+  var [isBlueActive, setBlue] = useState("false");
+  const onPressSetBlue = () => {
+    setBlue(isBlueActive === "false" ? "true" : "false");
+  }
 
 
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-
-          <View>
+        <View>
             <Button title="Crash" onPress={() => Crashes.generateTestCrash()}/>
           </View>
-        </View>
+        <View>
+            <Button title='Red' 
+            onPress={onPressSetRed}/>
+            <Text>Red is: {isRedActive}</Text>
+            <Button title='Yellow' 
+            onPress={onPressSetYellow}/>
+            <Text>Yellow is: {isYellowActive}</Text>
+            <Button title='Blue' 
+            onPress={onPressSetBlue}/>
+            <Text>Blue is: {isBlueActive}</Text>
+          </View>
       </ScrollView>
     </SafeAreaView>
   );
